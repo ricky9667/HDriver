@@ -1,11 +1,17 @@
 <resources>
     <string name="app_name">HDriver</string>
     <string name="action_settings">Settings</string>
+    <string name="search_button">Search Button</string>
 
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="recent_item_fragment_label">觀看紀錄</string>
+
+    <!-- Search Dialog -->
+    <string name="text_set_car_information">設定開車資訊</string>
+    <string name="text_enter_car_number">輸入車號</string>
+    <string name="text_search">搜尋</string>
 
     <string name="next">Next</string>
     <string name="previous">Previous</string>
