@@ -3,10 +3,9 @@ package com.rickyhu.hdriver
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.rickyhu.hdriver.databinding.DialogSearchBinding
 
@@ -26,12 +25,9 @@ class SearchDialogFragment : DialogFragment() {
             val godNumber = godNumberText.toIntOrNull()
 
             if (godNumber != null) {
-                val url = "$NHENTAI_BASE_URL/$godNumber"
-                val intent = Intent(activity, WebViewActivity::class.java)
-                intent.putExtra("url", url)
-                startActivity(intent)
+                openWebView("$NHENTAI_BASE_URL/$godNumber")
             } else {
-                Log.e("SearchDialogFragment", "unable to load view")
+                showOpenWebViewFailToast()
             }
         }
 
@@ -39,7 +35,13 @@ class SearchDialogFragment : DialogFragment() {
     }
 
     private fun openWebView(url: String) {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        val intent = Intent(activity, WebViewActivity::class.java)
+        intent.putExtra("url", url)
         startActivity(intent)
+    }
+
+    private fun showOpenWebViewFailToast() {
+        val toast = Toast.makeText(activity?.applicationContext, "無法開啟頁面", Toast.LENGTH_SHORT)
+        toast.show()
     }
 }

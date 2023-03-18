@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class WebViewActivity : AppCompatActivity() {
@@ -26,5 +27,12 @@ class WebViewActivity : AppCompatActivity() {
         val url = intent.getStringExtra("url")
         if (url != null)
             webView.loadUrl(url)
+        else
+            showOpenWebViewFailToast()
+    }
+
+    private fun showOpenWebViewFailToast() {
+        val toast = Toast.makeText(applicationContext, "無法開啟頁面", Toast.LENGTH_SHORT)
+        toast.show()
     }
 }
