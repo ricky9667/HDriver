@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rickyhu.hdriver.databinding.FragmentRecentItemListBinding
-import com.rickyhu.hdriver.placeholder.PlaceholderContent
 
 class RecentListFragment : Fragment() {
 
@@ -22,10 +21,13 @@ class RecentListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentRecentItemListBinding.inflate(inflater, container, false)
-        binding.recyclerView.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = RecentListAdapter(PlaceholderContent.ITEMS)
-        }
+
+        val adapter = RecentListAdapter()
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(context)
+
+        viewModel.godNumberList.observe(viewLifecycleOwner) { adapter.submitList(it) }
+
         return binding.root
     }
 }
