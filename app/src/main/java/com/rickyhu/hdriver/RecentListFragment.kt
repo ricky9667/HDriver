@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rickyhu.hdriver.databinding.FragmentRecentItemListBinding
 import com.rickyhu.hdriver.placeholder.PlaceholderContent
@@ -13,6 +14,8 @@ class RecentListFragment : Fragment() {
 
     private var _binding: FragmentRecentItemListBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel: RecentListViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

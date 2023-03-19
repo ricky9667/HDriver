@@ -7,11 +7,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
 import com.rickyhu.hdriver.databinding.DialogSearchBinding
 
 class SearchDialogFragment : DialogFragment() {
     private lateinit var binding: DialogSearchBinding
     private val NHENTAI_BASE_URL = "https://nhentai.net/g"
+
+    private val viewModel: RecentListViewModel by activityViewModels()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = DialogSearchBinding.inflate(LayoutInflater.from(activity))
@@ -26,6 +29,7 @@ class SearchDialogFragment : DialogFragment() {
 
             if (godNumber != null) {
                 openWebView("$NHENTAI_BASE_URL/$godNumber")
+                viewModel.addRecentItem(godNumber.toString())
             } else {
                 showOpenWebViewFailToast()
             }
