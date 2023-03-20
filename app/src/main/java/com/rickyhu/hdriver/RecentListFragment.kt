@@ -1,5 +1,6 @@
 package com.rickyhu.hdriver
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -23,11 +24,22 @@ class RecentListFragment : Fragment() {
         _binding = FragmentRecentItemListBinding.inflate(inflater, container, false)
 
         val adapter = RecentListAdapter()
+        adapter.setOnItemClickListener(object : RecentListAdapter.RecentItemClickListener {
+            override fun onClick(item: RecentListItem) {
+                openWebView("https://nhentai.net/g/${item.number}")
+            }
+        })
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
 
         viewModel.godNumberList.observe(viewLifecycleOwner) { adapter.submitList(it) }
 
         return binding.root
+    }
+
+    private fun openWebView(url: String) {
+        val intent = Intent(activity, WebViewActivity::class.java)
+        intent.putExtra("url", url)
+        startActivity(intent)
     }
 }
