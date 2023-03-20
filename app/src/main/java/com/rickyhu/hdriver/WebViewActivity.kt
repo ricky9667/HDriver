@@ -8,27 +8,34 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class WebViewActivity : AppCompatActivity() {
+
+    private lateinit var webView: WebView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_web_view)
 
-        val webView = findViewById<WebView>(R.id.web_view)
+        webView = findViewById(R.id.web_view)
         webView.settings.javaScriptEnabled = true
         webView.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(
                 view: WebView?,
                 request: WebResourceRequest?
             ): Boolean {
-                view?.loadUrl(request?.url.toString())
+                view?.loadUrl(request?.url.toString()) ?: return false
                 return true
             }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
 
         val url = intent.getStringExtra("url")
-        if (url != null)
+        if (url != null) {
             webView.loadUrl(url)
-        else
+        } else {
             showOpenWebViewFailToast()
+        }
     }
 
     private fun showOpenWebViewFailToast() {

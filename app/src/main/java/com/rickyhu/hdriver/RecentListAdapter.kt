@@ -37,7 +37,9 @@ class RecentListAdapter :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             FragmentRecentItemBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false
+                LayoutInflater.from(parent.context),
+                parent,
+                false
             )
         )
     }
@@ -54,7 +56,6 @@ class RecentListAdapter :
 
         override fun areContentsTheSame(oldItem: RecentListItem, newItem: RecentListItem) =
             oldItem == newItem
-
     }
 
     interface RecentItemClickListener {

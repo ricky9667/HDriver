@@ -18,7 +18,8 @@ class RecentListFragment : Fragment() {
     private val viewModel: RecentListViewModel by activityViewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentRecentItemListBinding.inflate(inflater, container, false)

@@ -1,5 +1,5 @@
 package com.rickyhu.hdriver
 
 data class RecentListItem(
-   val number: String
+    val number: String
 )
