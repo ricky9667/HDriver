@@ -1,8 +1,9 @@
-package com.rickyhu.hdriver
+package com.rickyhu.hdriver.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.rickyhu.hdriver.data.RecentListItem
 
 class RecentListViewModel : ViewModel() {
     private val _godNumberList = MutableLiveData<List<RecentListItem>>()

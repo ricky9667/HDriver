@@ -1,4 +1,4 @@
-package com.rickyhu.hdriver
+package com.rickyhu.hdriver.presentation
 
 import android.app.AlertDialog
 import android.app.Dialog
@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
+import com.rickyhu.hdriver.R
+import com.rickyhu.hdriver.viewmodel.RecentListViewModel
 import com.rickyhu.hdriver.databinding.DialogSearchBinding
 
 class SearchDialogFragment : DialogFragment() {

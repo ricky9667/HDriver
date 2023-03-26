@@ -14,10 +14,10 @@
         android:theme="@style/Theme.HDriver"
         tools:targetApi="31">
         <activity
-            android:name=".WebViewActivity"
+            android:name=".presentation.WebViewActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".presentation.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.HDriver">

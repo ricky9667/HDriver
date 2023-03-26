@@ -1,4 +1,4 @@
-package com.rickyhu.hdriver
+package com.rickyhu.hdriver.presentation
 
 import android.os.Bundle
 import android.view.Menu
@@ -9,6 +9,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.rickyhu.hdriver.R
 import com.rickyhu.hdriver.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

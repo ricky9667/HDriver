@@ -1,4 +1,4 @@
-package com.rickyhu.hdriver
+package com.rickyhu.hdriver.presentation
 
 import android.os.Bundle
 import android.webkit.WebResourceRequest
@@ -6,6 +6,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.rickyhu.hdriver.R
 
 class WebViewActivity : AppCompatActivity() {
 

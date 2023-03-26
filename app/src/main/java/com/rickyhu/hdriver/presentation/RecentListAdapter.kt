@@ -1,10 +1,11 @@
-package com.rickyhu.hdriver
+package com.rickyhu.hdriver.presentation
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.rickyhu.hdriver.data.RecentListItem
 import com.rickyhu.hdriver.databinding.FragmentRecentItemBinding
 
 class RecentListAdapter :

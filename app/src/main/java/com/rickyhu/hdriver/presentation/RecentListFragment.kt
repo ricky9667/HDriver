@@ -1,4 +1,4 @@
-package com.rickyhu.hdriver
+package com.rickyhu.hdriver.presentation
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.rickyhu.hdriver.data.RecentListItem
+import com.rickyhu.hdriver.viewmodel.RecentListViewModel
 import com.rickyhu.hdriver.databinding.FragmentRecentItemListBinding
 
 class RecentListFragment : Fragment() {
