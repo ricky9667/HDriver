@@ -1,7 +1,6 @@
 package com.rickyhu.hdriver.viewmodel
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -28,8 +27,7 @@ class RecentListViewModel(db: AppDatabase) : ViewModel() {
     fun addRecentItem(number: String, url: String) {
         if (number.isEmpty()) return
 
-        Log.d("RecentListViewModel", "addRecentItem: $number, $url")
-        val newItem = GodItem(number, url)
+        val newItem = GodItem(number = number, url = url)
         viewModelScope.launch {
             godItemDao.insert(newItem)
         }

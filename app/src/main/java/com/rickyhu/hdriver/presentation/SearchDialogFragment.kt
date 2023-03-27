@@ -15,7 +15,6 @@ import com.rickyhu.hdriver.viewmodel.RecentListViewModelFactory
 
 class SearchDialogFragment : DialogFragment() {
     private lateinit var binding: DialogSearchBinding
-    private val NHENTAI_BASE_URL = "https://nhentai.net/g"
 
     private val viewModel: RecentListViewModel by activityViewModels {
         RecentListViewModelFactory(requireContext())
@@ -32,9 +31,8 @@ class SearchDialogFragment : DialogFragment() {
             val godNumber = godNumberText.toIntOrNull()
 
             if (godNumber != null) {
-                val url = "$NHENTAI_BASE_URL/$godNumber"
+                val url = baseUrl.replace("{query}", godNumberText)
                 openWebView(url)
-
                 viewModel.addRecentItem(godNumberText, url)
             } else {
                 showOpenWebViewFailToast()
@@ -53,5 +51,9 @@ class SearchDialogFragment : DialogFragment() {
     private fun showOpenWebViewFailToast() {
         val toast = Toast.makeText(activity?.applicationContext, "無法開啟頁面", Toast.LENGTH_SHORT)
         toast.show()
+    }
+
+    companion object {
+        const val baseUrl = "https://nhentai.net/g/{query}"
     }
 }

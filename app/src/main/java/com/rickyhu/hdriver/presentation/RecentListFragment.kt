@@ -2,7 +2,6 @@ package com.rickyhu.hdriver.presentation
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,13 +35,11 @@ class RecentListFragment : Fragment() {
                 openWebView("https://nhentai.net/g/${item.number}")
             }
         })
+
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
 
-        viewModel.onRecentListChanged = {
-            adapter.submitList(it)
-            Log.d("RecentListFragment", "onCreateView: $it")
-        }
+        viewModel.onRecentListChanged = { adapter.submitList(it) }
 
         return binding.root
     }

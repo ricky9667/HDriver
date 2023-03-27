@@ -48,7 +48,7 @@ class RecentListAdapter :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
         holder.godNumberView.text = item.number
-        holder.godUrlView.text = "https://nhentai.net/g/${item.number}"
+        holder.godUrlView.text = item.url
     }
 
     companion object DiffCallback : DiffUtil.ItemCallback<GodItem>() {
