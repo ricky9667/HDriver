@@ -8,16 +8,25 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.rickyhu.hdriver.data.RecentListItem
-import com.rickyhu.hdriver.viewmodel.RecentListViewModel
+import com.rickyhu.hdriver.GodApplication
+import com.rickyhu.hdriver.data.model.GodItem
 import com.rickyhu.hdriver.databinding.FragmentRecentItemListBinding
+import com.rickyhu.hdriver.viewmodel.RecentListViewModel
+import com.rickyhu.hdriver.viewmodel.RecentListViewModelFactory
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class RecentListFragment : Fragment() {
 
     private var _binding: FragmentRecentItemListBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: RecentListViewModel by activityViewModels()
+    private val viewModel: RecentListViewModel by activityViewModels {
+        RecentListViewModelFactory(
+            (activity?.application as GodApplication).database.godItemDao()
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,14 +37,16 @@ class RecentListFragment : Fragment() {
 
         val adapter = RecentListAdapter()
         adapter.setOnItemClickListener(object : RecentListAdapter.RecentItemClickListener {
-            override fun onClick(item: RecentListItem) {
+            override fun onClick(item: GodItem) {
                 openWebView("https://nhentai.net/g/${item.number}")
             }
         })
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
 
-        viewModel.godNumberList.observe(viewLifecycleOwner) { adapter.submitList(it) }
+        CoroutineScope(Dispatchers.IO).launch {
+            viewModel.godNumberList.collect { adapter.submitList(it) }
+        }
 
         return binding.root
     }
