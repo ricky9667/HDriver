@@ -9,20 +9,22 @@ import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import com.rickyhu.hdriver.R
-import com.rickyhu.hdriver.viewmodel.RecentListViewModel
 import com.rickyhu.hdriver.databinding.DialogSearchBinding
+import com.rickyhu.hdriver.viewmodel.RecentListViewModel
+import com.rickyhu.hdriver.viewmodel.RecentListViewModelFactory
 
 class SearchDialogFragment : DialogFragment() {
     private lateinit var binding: DialogSearchBinding
     private val NHENTAI_BASE_URL = "https://nhentai.net/g"
 
-    private val viewModel: RecentListViewModel by activityViewModels()
+    private val viewModel: RecentListViewModel by activityViewModels {
+        RecentListViewModelFactory(requireContext())
+    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = DialogSearchBinding.inflate(LayoutInflater.from(activity))
 
-        val builder = AlertDialog.Builder(requireContext())
-            .setView(binding.root)
+        val builder = AlertDialog.Builder(requireContext()).setView(binding.root)
             .setTitle(getString(R.string.text_set_car_information))
 
         binding.buttonSearch.setOnClickListener {
@@ -30,8 +32,10 @@ class SearchDialogFragment : DialogFragment() {
             val godNumber = godNumberText.toIntOrNull()
 
             if (godNumber != null) {
-                openWebView("$NHENTAI_BASE_URL/$godNumber")
-                viewModel.addRecentItem(godNumber.toString())
+                val url = "$NHENTAI_BASE_URL/$godNumber"
+                openWebView(url)
+
+                viewModel.addRecentItem(godNumberText, url)
             } else {
                 showOpenWebViewFailToast()
             }

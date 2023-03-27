@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.rickyhu.hdriver.data.RecentListItem
+import com.rickyhu.hdriver.data.model.GodItem
 import com.rickyhu.hdriver.databinding.FragmentRecentItemBinding
 
 class RecentListAdapter :
-    ListAdapter<RecentListItem, RecentListAdapter.ViewHolder>(DiffCallback) {
+    ListAdapter<GodItem, RecentListAdapter.ViewHolder>(DiffCallback) {
 
     private var listener: RecentItemClickListener? = null
 
@@ -51,15 +51,15 @@ class RecentListAdapter :
         holder.godUrlView.text = "https://nhentai.net/g/${item.number}"
     }
 
-    companion object DiffCallback : DiffUtil.ItemCallback<RecentListItem>() {
-        override fun areItemsTheSame(oldItem: RecentListItem, newItem: RecentListItem) =
+    companion object DiffCallback : DiffUtil.ItemCallback<GodItem>() {
+        override fun areItemsTheSame(oldItem: GodItem, newItem: GodItem) =
             oldItem.number == newItem.number
 
-        override fun areContentsTheSame(oldItem: RecentListItem, newItem: RecentListItem) =
+        override fun areContentsTheSame(oldItem: GodItem, newItem: GodItem) =
             oldItem == newItem
     }
 
     interface RecentItemClickListener {
-        fun onClick(item: RecentListItem)
+        fun onClick(item: GodItem)
     }
 }

@@ -2,22 +2,26 @@ package com.rickyhu.hdriver.presentation
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.rickyhu.hdriver.data.RecentListItem
-import com.rickyhu.hdriver.viewmodel.RecentListViewModel
+import com.rickyhu.hdriver.data.model.GodItem
 import com.rickyhu.hdriver.databinding.FragmentRecentItemListBinding
+import com.rickyhu.hdriver.viewmodel.RecentListViewModel
+import com.rickyhu.hdriver.viewmodel.RecentListViewModelFactory
 
 class RecentListFragment : Fragment() {
 
     private var _binding: FragmentRecentItemListBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: RecentListViewModel by activityViewModels()
+    private val viewModel: RecentListViewModel by activityViewModels {
+        RecentListViewModelFactory(requireContext())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,14 +32,17 @@ class RecentListFragment : Fragment() {
 
         val adapter = RecentListAdapter()
         adapter.setOnItemClickListener(object : RecentListAdapter.RecentItemClickListener {
-            override fun onClick(item: RecentListItem) {
+            override fun onClick(item: GodItem) {
                 openWebView("https://nhentai.net/g/${item.number}")
             }
         })
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
 
-        viewModel.godNumberList.observe(viewLifecycleOwner) { adapter.submitList(it) }
+        viewModel.onRecentListChanged = {
+            adapter.submitList(it)
+            Log.d("RecentListFragment", "onCreateView: $it")
+        }
 
         return binding.root
     }
