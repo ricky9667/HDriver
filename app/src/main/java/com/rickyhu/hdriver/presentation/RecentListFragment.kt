@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.rickyhu.hdriver.R
 import com.rickyhu.hdriver.data.model.GodItem
 import com.rickyhu.hdriver.databinding.FragmentRecentItemListBinding
 import com.rickyhu.hdriver.viewmodel.RecentListViewModel
@@ -32,7 +33,8 @@ class RecentListFragment : Fragment() {
         val adapter = RecentListAdapter()
         adapter.setOnItemClickListener(object : RecentListAdapter.RecentItemClickListener {
             override fun onClick(item: GodItem) {
-                openWebView("https://nhentai.net/g/${item.number}")
+                val url = baseUrl.replace(getString(R.string.query_string), item.number)
+                openWebView(url)
             }
         })
 
@@ -48,5 +50,10 @@ class RecentListFragment : Fragment() {
         val intent = Intent(activity, WebViewActivity::class.java)
         intent.putExtra("url", url)
         startActivity(intent)
+    }
+
+    companion object {
+        // TODO: extract url
+        const val baseUrl = "https://nhentai.net/g/{query}"
     }
 }

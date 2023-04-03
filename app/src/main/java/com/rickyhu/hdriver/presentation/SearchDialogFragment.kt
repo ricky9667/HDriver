@@ -31,7 +31,7 @@ class SearchDialogFragment : DialogFragment() {
             val godNumber = godNumberText.toIntOrNull()
 
             if (godNumber != null) {
-                val url = baseUrl.replace("{query}", godNumberText)
+                val url = baseUrl.replace(getString(R.string.query_string), godNumberText)
                 openWebView(url)
                 viewModel.addRecentItem(godNumberText, url)
             } else {
@@ -54,6 +54,7 @@ class SearchDialogFragment : DialogFragment() {
     }
 
     companion object {
+        // TODO: extract url
         const val baseUrl = "https://nhentai.net/g/{query}"
     }
 }
