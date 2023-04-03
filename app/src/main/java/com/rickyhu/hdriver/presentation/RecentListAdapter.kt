@@ -12,15 +12,21 @@ class RecentListAdapter :
     ListAdapter<GodItem, RecentListAdapter.ViewHolder>(DiffCallback) {
 
     private var listener: RecentItemClickListener? = null
+    private var deleteListener: RecentItemClickListener? = null
 
     fun setOnItemClickListener(listener: RecentItemClickListener) {
         this.listener = listener
+    }
+
+    fun setOnDeleteClickListener(listener: RecentItemClickListener) {
+        this.deleteListener = listener
     }
 
     inner class ViewHolder(binding: FragmentRecentItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         val godNumberView = binding.godNumber
         val godUrlView = binding.godUrl
+        private val deleteButton = binding.buttonDeleteItem
 
         init {
             itemView.setOnClickListener {
@@ -28,6 +34,14 @@ class RecentListAdapter :
                 if (position != RecyclerView.NO_POSITION) {
                     val item = getItem(position)
                     listener?.onClick(item)
+                }
+            }
+
+            deleteButton.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val item = getItem(position)
+                    deleteListener?.onClick(item)
                 }
             }
         }

@@ -37,6 +37,9 @@ class RecentListFragment : Fragment() {
                 openWebView(url)
             }
         })
+        adapter.setOnDeleteClickListener(object : RecentListAdapter.RecentItemClickListener {
+            override fun onClick(item: GodItem) = viewModel.deleteRecentItem(item)
+        })
 
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(context)

@@ -20,7 +20,9 @@ class RecentListViewModel(db: AppDatabase) : ViewModel() {
 
     private fun registerRecentListUpdateEvent() {
         viewModelScope.launch {
-            godItemDao.getRecentList().collect() { onRecentListChanged(it) }
+            godItemDao.getRecentList().collect() {
+                onRecentListChanged(it)
+            }
         }
     }
 
@@ -30,6 +32,12 @@ class RecentListViewModel(db: AppDatabase) : ViewModel() {
         val newItem = GodItem(number = number, url = url)
         viewModelScope.launch {
             godItemDao.insert(newItem)
+        }
+    }
+
+    fun deleteRecentItem(item: GodItem) {
+        viewModelScope.launch {
+            godItemDao.delete(item)
         }
     }
 }
