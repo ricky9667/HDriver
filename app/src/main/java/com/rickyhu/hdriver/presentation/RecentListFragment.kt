@@ -11,7 +11,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.rickyhu.hdriver.R
 import com.rickyhu.hdriver.data.model.GodItem
 import com.rickyhu.hdriver.databinding.FragmentRecentItemListBinding
 import com.rickyhu.hdriver.viewmodel.RecentListViewModel
@@ -37,15 +36,10 @@ class RecentListFragment : Fragment() {
         val adapter = RecentListAdapter()
         adapter.apply {
             setOnItemClickListener(object : RecentListAdapter.RecentItemClickListener {
-                override fun onClick(item: GodItem) =
-                    openWebView(baseUrl.replace(getString(R.string.query_string), item.number))
+                override fun onClick(item: GodItem) = openWebView(item.url)
             })
             setOnLongClickListener(object : RecentListAdapter.RecentItemClickListener {
-                override fun onClick(item: GodItem) {
-                    val clipboard = requireActivity()
-                        .getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                    clipboard.setPrimaryClip(ClipData.newPlainText("url", item.url))
-                }
+                override fun onClick(item: GodItem) = copyUrlToClipboard(item.url)
             })
             setOnDeleteClickListener(object : RecentListAdapter.RecentItemClickListener {
                 override fun onClick(item: GodItem) = viewModel.deleteRecentItem(item)
@@ -65,6 +59,13 @@ class RecentListFragment : Fragment() {
         val intent = Intent(activity, WebViewActivity::class.java)
         intent.putExtra("url", url)
         startActivity(intent)
+    }
+
+    private fun copyUrlToClipboard(url: String) {
+        val clipboard = requireActivity()
+            .getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip = ClipData.newPlainText("url", url)
+        clipboard.setPrimaryClip(clip)
     }
 
     companion object {
