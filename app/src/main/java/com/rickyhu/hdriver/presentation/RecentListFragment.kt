@@ -1,5 +1,8 @@
 package com.rickyhu.hdriver.presentation
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -30,20 +33,29 @@ class RecentListFragment : Fragment() {
     ): View? {
         _binding = FragmentRecentItemListBinding.inflate(inflater, container, false)
 
+        // setup recent list item click listeners
         val adapter = RecentListAdapter()
-        adapter.setOnItemClickListener(object : RecentListAdapter.RecentItemClickListener {
-            override fun onClick(item: GodItem) {
-                val url = baseUrl.replace(getString(R.string.query_string), item.number)
-                openWebView(url)
-            }
-        })
-        adapter.setOnDeleteClickListener(object : RecentListAdapter.RecentItemClickListener {
-            override fun onClick(item: GodItem) = viewModel.deleteRecentItem(item)
-        })
+        adapter.apply {
+            setOnItemClickListener(object : RecentListAdapter.RecentItemClickListener {
+                override fun onClick(item: GodItem) =
+                    openWebView(baseUrl.replace(getString(R.string.query_string), item.number))
+            })
+            setOnLongClickListener(object : RecentListAdapter.RecentItemClickListener {
+                override fun onClick(item: GodItem) {
+                    val clipboard = requireActivity()
+                        .getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                    clipboard.setPrimaryClip(ClipData.newPlainText("url", item.url))
+                }
+            })
+            setOnDeleteClickListener(object : RecentListAdapter.RecentItemClickListener {
+                override fun onClick(item: GodItem) = viewModel.deleteRecentItem(item)
+            })
+        }
 
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
 
+        // observe recent list changes from view model
         viewModel.onRecentListChanged = { adapter.submitList(it) }
 
         return binding.root

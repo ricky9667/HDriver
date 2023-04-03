@@ -12,10 +12,15 @@ class RecentListAdapter :
     ListAdapter<GodItem, RecentListAdapter.ViewHolder>(DiffCallback) {
 
     private var listener: RecentItemClickListener? = null
+    private var longClickListener: RecentItemClickListener? = null
     private var deleteListener: RecentItemClickListener? = null
 
     fun setOnItemClickListener(listener: RecentItemClickListener) {
         this.listener = listener
+    }
+
+    fun setOnLongClickListener(listener: RecentItemClickListener) {
+        this.longClickListener = listener
     }
 
     fun setOnDeleteClickListener(listener: RecentItemClickListener) {
@@ -35,6 +40,15 @@ class RecentListAdapter :
                     val item = getItem(position)
                     listener?.onClick(item)
                 }
+            }
+
+            itemView.setOnLongClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val item = getItem(position)
+                    longClickListener?.onClick(item)
+                }
+                true
             }
 
             deleteButton.setOnClickListener {
