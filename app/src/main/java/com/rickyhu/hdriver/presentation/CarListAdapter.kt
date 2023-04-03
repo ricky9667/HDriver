@@ -5,11 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.rickyhu.hdriver.data.model.GodItem
-import com.rickyhu.hdriver.databinding.FragmentRecentItemBinding
+import com.rickyhu.hdriver.data.model.CarItem
+import com.rickyhu.hdriver.databinding.FragmentCarItemBinding
 
-class RecentListAdapter :
-    ListAdapter<GodItem, RecentListAdapter.ViewHolder>(DiffCallback) {
+class CarListAdapter : ListAdapter<CarItem, CarListAdapter.ViewHolder>(DiffCallback) {
 
     private var listener: RecentItemClickListener? = null
     private var longClickListener: RecentItemClickListener? = null
@@ -27,7 +26,7 @@ class RecentListAdapter :
         this.deleteListener = listener
     }
 
-    inner class ViewHolder(binding: FragmentRecentItemBinding) :
+    inner class ViewHolder(binding: FragmentCarItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         val godNumberView = binding.godNumber
         val godUrlView = binding.godUrl
@@ -65,7 +64,7 @@ class RecentListAdapter :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            FragmentRecentItemBinding.inflate(
+            FragmentCarItemBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -79,15 +78,15 @@ class RecentListAdapter :
         holder.godUrlView.text = item.url
     }
 
-    companion object DiffCallback : DiffUtil.ItemCallback<GodItem>() {
-        override fun areItemsTheSame(oldItem: GodItem, newItem: GodItem) =
+    companion object DiffCallback : DiffUtil.ItemCallback<CarItem>() {
+        override fun areItemsTheSame(oldItem: CarItem, newItem: CarItem) =
             oldItem.number == newItem.number
 
-        override fun areContentsTheSame(oldItem: GodItem, newItem: GodItem) =
+        override fun areContentsTheSame(oldItem: CarItem, newItem: CarItem) =
             oldItem == newItem
     }
 
     interface RecentItemClickListener {
-        fun onClick(item: GodItem)
+        fun onClick(item: CarItem)
     }
 }

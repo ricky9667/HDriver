@@ -27,7 +27,7 @@
     </fragment>
     <fragment
         android:id="@+id/recentListFragment"
-        android:name="com.rickyhu.hdriver.presentation.RecentListFragment"
+        android:name="com.rickyhu.hdriver.presentation.CarListFragment"
         android:label="@string/recent_item_fragment_label"
-        tools:layout="@layout/fragment_recent_item_list" />
+        tools:layout="@layout/fragment_car_list" />
 </navigation>

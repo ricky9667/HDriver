@@ -5,17 +5,17 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.rickyhu.hdriver.data.model.GodItem
+import com.rickyhu.hdriver.data.model.CarItem
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface GodItemDao {
-    @Query("SELECT * FROM god_item_table")
-    fun getRecentList(): Flow<List<GodItem>>
+interface CarItemDao {
+    @Query("SELECT * FROM car_list_table")
+    fun getRecentList(): Flow<List<CarItem>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(item: GodItem)
+    suspend fun insert(item: CarItem)
 
     @Delete
-    suspend fun delete(item: GodItem)
+    suspend fun delete(item: CarItem)
 }

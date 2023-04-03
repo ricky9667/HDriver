@@ -6,13 +6,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.rickyhu.hdriver.data.database.AppDatabase
 import com.rickyhu.hdriver.data.database.DatabaseProvider
-import com.rickyhu.hdriver.data.model.GodItem
+import com.rickyhu.hdriver.data.model.CarItem
 import kotlinx.coroutines.launch
 
 class RecentListViewModel(db: AppDatabase) : ViewModel() {
 
     private val godItemDao = db.godItemDao()
-    var onRecentListChanged: (List<GodItem>) -> Unit = {}
+    var onRecentListChanged: (List<CarItem>) -> Unit = {}
 
     init {
         registerRecentListUpdateEvent()
@@ -29,13 +29,13 @@ class RecentListViewModel(db: AppDatabase) : ViewModel() {
     fun addRecentItem(number: String, url: String) {
         if (number.isEmpty()) return
 
-        val newItem = GodItem(number = number, url = url)
+        val newItem = CarItem(number = number, url = url)
         viewModelScope.launch {
             godItemDao.insert(newItem)
         }
     }
 
-    fun deleteRecentItem(item: GodItem) {
+    fun deleteRecentItem(item: CarItem) {
         viewModelScope.launch {
             godItemDao.delete(item)
         }

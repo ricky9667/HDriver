@@ -13,14 +13,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rickyhu.hdriver.R
-import com.rickyhu.hdriver.data.model.GodItem
-import com.rickyhu.hdriver.databinding.FragmentRecentItemListBinding
+import com.rickyhu.hdriver.data.model.CarItem
+import com.rickyhu.hdriver.databinding.FragmentCarListBinding
 import com.rickyhu.hdriver.viewmodel.RecentListViewModel
 import com.rickyhu.hdriver.viewmodel.RecentListViewModelFactory
 
-class RecentListFragment : Fragment() {
+class CarListFragment : Fragment() {
 
-    private var _binding: FragmentRecentItemListBinding? = null
+    private var _binding: FragmentCarListBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel: RecentListViewModel by activityViewModels {
@@ -32,24 +32,24 @@ class RecentListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentRecentItemListBinding.inflate(inflater, container, false)
+        _binding = FragmentCarListBinding.inflate(inflater, container, false)
 
         // setup recent list item click listeners
-        val adapter = RecentListAdapter()
+        val adapter = CarListAdapter()
         adapter.apply {
-            setOnItemClickListener(object : RecentListAdapter.RecentItemClickListener {
-                override fun onClick(item: GodItem) = openWebView(item.url)
+            setOnItemClickListener(object : CarListAdapter.RecentItemClickListener {
+                override fun onClick(item: CarItem) = openWebView(item.url)
             })
-            setOnLongClickListener(object : RecentListAdapter.RecentItemClickListener {
-                override fun onClick(item: GodItem) = copyUrlToClipboard(item.url)
+            setOnLongClickListener(object : CarListAdapter.RecentItemClickListener {
+                override fun onClick(item: CarItem) = copyUrlToClipboard(item.url)
             })
-            setOnDeleteClickListener(object : RecentListAdapter.RecentItemClickListener {
-                override fun onClick(item: GodItem) = deleteItem(item)
+            setOnDeleteClickListener(object : CarListAdapter.RecentItemClickListener {
+                override fun onClick(item: CarItem) = deleteItem(item)
             })
         }
 
-        binding.recyclerView.adapter = adapter
-        binding.recyclerView.layoutManager = LinearLayoutManager(context)
+        binding.recyclerViewCarList.adapter = adapter
+        binding.recyclerViewCarList.layoutManager = LinearLayoutManager(context)
 
         // observe recent list changes from view model
         viewModel.onRecentListChanged = { adapter.submitList(it) }
@@ -70,7 +70,7 @@ class RecentListFragment : Fragment() {
         clipboard.setPrimaryClip(clip)
     }
 
-    private fun deleteItem(item: GodItem) {
+    private fun deleteItem(item: CarItem) {
         val dialog = AlertDialog.Builder(requireContext()).setTitle("刪除車號")
             .setMessage("你確定要刪除 ${item.number} 嗎？")
             .setPositiveButton(getString(R.string.dialog_ok)) { _, _ ->

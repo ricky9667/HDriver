@@ -4,12 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.rickyhu.hdriver.data.dao.GodItemDao
-import com.rickyhu.hdriver.data.model.GodItem
+import com.rickyhu.hdriver.data.dao.CarItemDao
+import com.rickyhu.hdriver.data.model.CarItem
 
-@Database(entities = [GodItem::class], version = 1, exportSchema = false)
+@Database(entities = [CarItem::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun godItemDao(): GodItemDao
+    abstract fun godItemDao(): CarItemDao
 }
 
 object DatabaseProvider {
