@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface CarItemDao {
     @Query("SELECT * FROM car_list_table ORDER BY lastViewedTime DESC")
-    fun getRecentList(): Flow<List<CarItem>>
+    fun getCarList(): Flow<List<CarItem>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(item: CarItem)

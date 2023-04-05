@@ -9,7 +9,7 @@ import com.rickyhu.hdriver.data.model.CarItem
 
 @Database(entities = [CarItem::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun godItemDao(): CarItemDao
+    abstract fun carItemDao(): CarItemDao
 }
 
 object DatabaseProvider {

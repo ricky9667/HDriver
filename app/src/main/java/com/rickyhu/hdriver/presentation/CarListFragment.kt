@@ -15,16 +15,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.rickyhu.hdriver.R
 import com.rickyhu.hdriver.data.model.CarItem
 import com.rickyhu.hdriver.databinding.FragmentCarListBinding
-import com.rickyhu.hdriver.viewmodel.RecentListViewModel
-import com.rickyhu.hdriver.viewmodel.RecentListViewModelFactory
+import com.rickyhu.hdriver.viewmodel.CarListViewModel
+import com.rickyhu.hdriver.viewmodel.CarListViewModelFactory
 
 class CarListFragment : Fragment() {
 
     private var _binding: FragmentCarListBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: RecentListViewModel by activityViewModels {
-        RecentListViewModelFactory(requireContext())
+    private val viewModel: CarListViewModel by activityViewModels {
+        CarListViewModelFactory(requireContext())
     }
 
     override fun onCreateView(
@@ -37,13 +37,13 @@ class CarListFragment : Fragment() {
         // setup recent list item click listeners
         val adapter = CarListAdapter()
         adapter.apply {
-            setOnItemClickListener(object : CarListAdapter.RecentItemClickListener {
+            setOnItemClickListener(object : CarListAdapter.ItemClickListener {
                 override fun onClick(item: CarItem) = viewCarListItem(item)
             })
-            setOnLongClickListener(object : CarListAdapter.RecentItemClickListener {
+            setOnLongClickListener(object : CarListAdapter.ItemClickListener {
                 override fun onClick(item: CarItem) = copyUrlToClipboard(item.url)
             })
-            setOnDeleteClickListener(object : CarListAdapter.RecentItemClickListener {
+            setOnDeleteClickListener(object : CarListAdapter.ItemClickListener {
                 override fun onClick(item: CarItem) = deleteItem(item)
             })
         }
@@ -79,7 +79,7 @@ class CarListFragment : Fragment() {
         val dialog = AlertDialog.Builder(requireContext()).setTitle("刪除車號")
             .setMessage("你確定要刪除 ${item.number} 嗎？")
             .setPositiveButton(getString(R.string.dialog_ok)) { _, _ ->
-                viewModel.deleteRecentItem(item)
+                viewModel.deleteCarItem(item)
             }.setNegativeButton(getString(R.string.dialog_cancel)) { _, _ -> }.create()
         dialog.show()
     }

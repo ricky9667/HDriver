@@ -10,7 +10,7 @@
     tools:context=".presentation.SearchDialogFragment">
 
     <EditText
-        android:id="@+id/edittext_god_number"
+        android:id="@+id/edittext_car_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"

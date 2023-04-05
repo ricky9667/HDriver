@@ -9,9 +9,9 @@ import com.rickyhu.hdriver.data.database.DatabaseProvider
 import com.rickyhu.hdriver.data.model.CarItem
 import kotlinx.coroutines.launch
 
-class RecentListViewModel(db: AppDatabase) : ViewModel() {
+class CarListViewModel(db: AppDatabase) : ViewModel() {
 
-    private val godItemDao = db.godItemDao()
+    private val carItemDao = db.carItemDao()
     var onRecentListChanged: (List<CarItem>) -> Unit = {}
 
     init {
@@ -20,7 +20,7 @@ class RecentListViewModel(db: AppDatabase) : ViewModel() {
 
     private fun registerRecentListUpdateEvent() {
         viewModelScope.launch {
-            godItemDao.getRecentList().collect() {
+            carItemDao.getCarList().collect() {
                 onRecentListChanged(it)
             }
         }
@@ -31,30 +31,30 @@ class RecentListViewModel(db: AppDatabase) : ViewModel() {
 
         val newItem = CarItem(number = number, url = url)
         viewModelScope.launch {
-            godItemDao.insert(newItem)
+            carItemDao.insert(newItem)
         }
     }
 
     fun updateCarItemViewTime(item: CarItem) {
         viewModelScope.launch {
-            godItemDao.update(item.copy(lastViewedTime = System.currentTimeMillis()))
+            carItemDao.update(item.copy(lastViewedTime = System.currentTimeMillis()))
         }
     }
 
-    fun deleteRecentItem(item: CarItem) {
+    fun deleteCarItem(item: CarItem) {
         viewModelScope.launch {
-            godItemDao.delete(item)
+            carItemDao.delete(item)
         }
     }
 }
 
-class RecentListViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
+class CarListViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(RecentListViewModel::class.java)) {
+        if (modelClass.isAssignableFrom(CarListViewModel::class.java)) {
             val db = DatabaseProvider.getDatabase(context)
 
             @Suppress("UNCHECKED_CAST")
-            return RecentListViewModel(db) as T
+            return CarListViewModel(db) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

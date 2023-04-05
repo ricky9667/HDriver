@@ -14,14 +14,14 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/god_number"
+            android:id="@+id/car_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="123456"
             android:textAppearance="?attr/textAppearanceListItem" />
 
         <TextView
-            android:id="@+id/god_url"
+            android:id="@+id/car_url"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="https://nhentai.org/g/123456"

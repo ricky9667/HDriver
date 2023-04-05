@@ -10,26 +10,26 @@ import com.rickyhu.hdriver.databinding.FragmentCarItemBinding
 
 class CarListAdapter : ListAdapter<CarItem, CarListAdapter.ViewHolder>(DiffCallback) {
 
-    private var listener: RecentItemClickListener? = null
-    private var longClickListener: RecentItemClickListener? = null
-    private var deleteListener: RecentItemClickListener? = null
+    private var listener: ItemClickListener? = null
+    private var longClickListener: ItemClickListener? = null
+    private var deleteListener: ItemClickListener? = null
 
-    fun setOnItemClickListener(listener: RecentItemClickListener) {
+    fun setOnItemClickListener(listener: ItemClickListener) {
         this.listener = listener
     }
 
-    fun setOnLongClickListener(listener: RecentItemClickListener) {
+    fun setOnLongClickListener(listener: ItemClickListener) {
         this.longClickListener = listener
     }
 
-    fun setOnDeleteClickListener(listener: RecentItemClickListener) {
+    fun setOnDeleteClickListener(listener: ItemClickListener) {
         this.deleteListener = listener
     }
 
     inner class ViewHolder(binding: FragmentCarItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        val godNumberView = binding.godNumber
-        val godUrlView = binding.godUrl
+        val carNumberView = binding.carNumber
+        val carUrlView = binding.carUrl
         private val deleteButton = binding.buttonDeleteItem
 
         init {
@@ -59,7 +59,7 @@ class CarListAdapter : ListAdapter<CarItem, CarListAdapter.ViewHolder>(DiffCallb
             }
         }
 
-        override fun toString(): String = godUrlView.text.toString()
+        override fun toString(): String = carUrlView.text.toString()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -74,8 +74,8 @@ class CarListAdapter : ListAdapter<CarItem, CarListAdapter.ViewHolder>(DiffCallb
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.godNumberView.text = item.number
-        holder.godUrlView.text = item.url
+        holder.carNumberView.text = item.number
+        holder.carUrlView.text = item.url
     }
 
     companion object DiffCallback : DiffUtil.ItemCallback<CarItem>() {
@@ -86,7 +86,7 @@ class CarListAdapter : ListAdapter<CarItem, CarListAdapter.ViewHolder>(DiffCallb
             oldItem == newItem
     }
 
-    interface RecentItemClickListener {
+    interface ItemClickListener {
         fun onClick(item: CarItem)
     }
 }

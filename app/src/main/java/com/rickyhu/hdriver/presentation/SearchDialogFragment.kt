@@ -10,14 +10,14 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import com.rickyhu.hdriver.R
 import com.rickyhu.hdriver.databinding.DialogSearchBinding
-import com.rickyhu.hdriver.viewmodel.RecentListViewModel
-import com.rickyhu.hdriver.viewmodel.RecentListViewModelFactory
+import com.rickyhu.hdriver.viewmodel.CarListViewModel
+import com.rickyhu.hdriver.viewmodel.CarListViewModelFactory
 
 class SearchDialogFragment : DialogFragment() {
     private lateinit var binding: DialogSearchBinding
 
-    private val viewModel: RecentListViewModel by activityViewModels {
-        RecentListViewModelFactory(requireContext())
+    private val viewModel: CarListViewModel by activityViewModels {
+        CarListViewModelFactory(requireContext())
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -31,13 +31,13 @@ class SearchDialogFragment : DialogFragment() {
     }
 
     private fun onSearchButtonClick() {
-        val godNumberText = binding.edittextGodNumber.text.toString()
-        val godNumber = godNumberText.toIntOrNull()
+        val carNumberText = binding.edittextCarNumber.text.toString()
+        val carNumber = carNumberText.toIntOrNull()
 
-        if (godNumber != null) {
-            val url = baseUrl.replace(getString(R.string.query_string), godNumberText)
+        if (carNumber != null) {
+            val url = baseUrl.replace(getString(R.string.query_string), carNumberText)
             openWebView(url)
-            viewModel.addCarItem(godNumberText, url)
+            viewModel.addCarItem(carNumberText, url)
         } else {
             showOpenWebViewFailToast()
         }
