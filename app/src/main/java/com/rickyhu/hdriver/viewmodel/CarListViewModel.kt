@@ -26,12 +26,16 @@ class CarListViewModel(db: AppDatabase) : ViewModel() {
         }
     }
 
-    fun addCarItem(number: String, url: String) {
+    fun viewCarItem(number: String, url: String) {
         if (number.isEmpty()) return
 
-        val newItem = CarItem(number = number, url = url)
         viewModelScope.launch {
-            carItemDao.insert(newItem)
+            val item = carItemDao.getCarItem(number, url)
+            if (item == null) {
+                carItemDao.insert(CarItem(url = url, number = number))
+            } else {
+                carItemDao.update(item.copy(lastViewedTime = System.currentTimeMillis()))
+            }
         }
     }
 

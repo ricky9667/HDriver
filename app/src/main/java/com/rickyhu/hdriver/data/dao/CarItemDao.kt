@@ -14,7 +14,10 @@ interface CarItemDao {
     @Query("SELECT * FROM car_list_table ORDER BY lastViewedTime DESC")
     fun getCarList(): Flow<List<CarItem>>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Query("SELECT * FROM car_list_table WHERE number = :number AND url = :url")
+    suspend fun getCarItem(number: String, url: String): CarItem?
+
+    @Insert
     suspend fun insert(item: CarItem)
 
     @Update

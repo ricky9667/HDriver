@@ -37,7 +37,7 @@ class SearchDialogFragment : DialogFragment() {
         if (carNumber != null) {
             val url = baseUrl.replace(getString(R.string.query_string), carNumberText)
             openWebView(url)
-            viewModel.addCarItem(carNumberText, url)
+            viewModel.viewCarItem(carNumberText, url)
         } else {
             showOpenWebViewFailToast()
         }
