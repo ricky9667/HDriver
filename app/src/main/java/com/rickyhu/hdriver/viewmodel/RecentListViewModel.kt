@@ -26,12 +26,18 @@ class RecentListViewModel(db: AppDatabase) : ViewModel() {
         }
     }
 
-    fun addRecentItem(number: String, url: String) {
+    fun addCarItem(number: String, url: String) {
         if (number.isEmpty()) return
 
         val newItem = CarItem(number = number, url = url)
         viewModelScope.launch {
             godItemDao.insert(newItem)
+        }
+    }
+
+    fun updateCarItemViewTime(item: CarItem) {
+        viewModelScope.launch {
+            godItemDao.update(item.copy(lastViewedTime = System.currentTimeMillis()))
         }
     }
 

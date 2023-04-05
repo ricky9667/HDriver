@@ -22,24 +22,25 @@ class SearchDialogFragment : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = DialogSearchBinding.inflate(LayoutInflater.from(activity))
+        binding.buttonSearch.setOnClickListener { onSearchButtonClick() }
 
-        val builder = AlertDialog.Builder(requireContext()).setView(binding.root)
+        val builder = AlertDialog.Builder(requireContext())
+            .setView(binding.root)
             .setTitle(getString(R.string.text_set_car_information))
-
-        binding.buttonSearch.setOnClickListener {
-            val godNumberText = binding.edittextGodNumber.text.toString()
-            val godNumber = godNumberText.toIntOrNull()
-
-            if (godNumber != null) {
-                val url = baseUrl.replace(getString(R.string.query_string), godNumberText)
-                openWebView(url)
-                viewModel.addRecentItem(godNumberText, url)
-            } else {
-                showOpenWebViewFailToast()
-            }
-        }
-
         return builder.create()
+    }
+
+    private fun onSearchButtonClick() {
+        val godNumberText = binding.edittextGodNumber.text.toString()
+        val godNumber = godNumberText.toIntOrNull()
+
+        if (godNumber != null) {
+            val url = baseUrl.replace(getString(R.string.query_string), godNumberText)
+            openWebView(url)
+            viewModel.addCarItem(godNumberText, url)
+        } else {
+            showOpenWebViewFailToast()
+        }
     }
 
     private fun openWebView(url: String) {

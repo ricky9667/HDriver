@@ -6,5 +6,6 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "car_list_table")
 data class CarItem(
     @PrimaryKey val url: String,
-    val number: String
+    val number: String,
+    val lastViewedTime: Long = System.currentTimeMillis()
 )

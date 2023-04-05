@@ -38,7 +38,7 @@ class CarListFragment : Fragment() {
         val adapter = CarListAdapter()
         adapter.apply {
             setOnItemClickListener(object : CarListAdapter.RecentItemClickListener {
-                override fun onClick(item: CarItem) = openWebView(item.url)
+                override fun onClick(item: CarItem) = viewCarListItem(item)
             })
             setOnLongClickListener(object : CarListAdapter.RecentItemClickListener {
                 override fun onClick(item: CarItem) = copyUrlToClipboard(item.url)
@@ -55,6 +55,11 @@ class CarListFragment : Fragment() {
         viewModel.onRecentListChanged = { adapter.submitList(it) }
 
         return binding.root
+    }
+
+    private fun viewCarListItem(item: CarItem) {
+        viewModel.updateCarItemViewTime(item)
+        openWebView(item.url)
     }
 
     private fun openWebView(url: String) {
