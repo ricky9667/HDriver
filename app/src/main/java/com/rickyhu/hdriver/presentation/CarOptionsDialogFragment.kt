@@ -15,24 +15,31 @@ data class CarOption(val title: String, val onClick: () -> Unit)
 
 class CarOptionsDialogFragment(private val viewModel: CarListViewModel, val item: CarItem) :
     DialogFragment() {
-    private val options =
-        listOf(
-            CarOption(if (item.isFavorite) "取消最愛" else "加入最愛") {
-                viewModel.toggleFavorite(item)
+    private lateinit var options: List<CarOption>
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        options = listOf(
+            if (item.isFavorite) {
+                CarOption(getString(R.string.text_remove_from_favorites)) {
+                    viewModel.toggleFavorite(item)
+                }
+            } else {
+                CarOption(getString(R.string.text_add_to_favorites)) {
+                    viewModel.toggleFavorite(item)
+                }
             },
-            CarOption("複製連結") {
+            CarOption(getString(R.string.text_copy_link)) {
                 copyToClipboard()
             },
-            CarOption("刪除車號") {
+            CarOption(getString(R.string.text_delete_car_item)) {
                 deleteItem(item)
             }
         )
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val optionTitles = options.map { it.title }.toTypedArray()
         return activity?.let {
             val builder = AlertDialog.Builder(it)
-            builder.setTitle("選項")
+            builder.setTitle(getString(R.string.text_options))
                 .setItems(optionTitles) { dialog, index ->
                     options[index].onClick()
                     dialog.dismiss()
@@ -48,7 +55,8 @@ class CarOptionsDialogFragment(private val viewModel: CarListViewModel, val item
     }
 
     private fun deleteItem(item: CarItem) {
-        val dialog = AlertDialog.Builder(requireContext()).setTitle("刪除車號")
+        val dialog = AlertDialog.Builder(requireContext())
+            .setTitle(getString(R.string.text_delete_car_item))
             .setMessage("你確定要刪除 ${item.number} 嗎？")
             .setPositiveButton(getString(R.string.dialog_ok)) { _, _ ->
                 viewModel.deleteCarItem(item)
