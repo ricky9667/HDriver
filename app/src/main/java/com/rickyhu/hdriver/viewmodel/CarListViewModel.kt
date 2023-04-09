@@ -44,9 +44,9 @@ class CarListViewModel(db: AppDatabase) : ViewModel() {
         }
     }
 
-    fun setCarItemFavorite(item: CarItem, isFavorite: Boolean) {
+    fun toggleFavorite(item: CarItem) {
         viewModelScope.launch {
-            carItemDao.update(item.copy(isFavorite = isFavorite))
+            carItemDao.update(item.copy(isFavorite = !item.isFavorite))
         }
     }
 

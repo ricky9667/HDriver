@@ -69,7 +69,7 @@ class CarListFragment : Fragment() {
     }
 
     private fun showCarOptionsDialog(item: CarItem) {
-        val dialog = CarOptionsDialogFragment(item)
+        val dialog = CarOptionsDialogFragment(viewModel, item)
         dialog.show(parentFragmentManager, "CarOptionsDialogFragment")
     }
 

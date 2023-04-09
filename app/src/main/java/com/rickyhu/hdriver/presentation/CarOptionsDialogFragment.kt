@@ -2,24 +2,29 @@ package com.rickyhu.hdriver.presentation
 
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.DialogFragment
+import com.rickyhu.hdriver.R
 import com.rickyhu.hdriver.data.model.CarItem
+import com.rickyhu.hdriver.viewmodel.CarListViewModel
 
 data class CarOption(val title: String, val onClick: () -> Unit)
 
-class CarOptionsDialogFragment(val item: CarItem) : DialogFragment() {
+class CarOptionsDialogFragment(private val viewModel: CarListViewModel, val item: CarItem) :
+    DialogFragment() {
     private val options =
         listOf(
-            CarOption(if (item.isFavorite) "取消收藏" else "加入收藏") {
-                Log.d("CarOptionsDialogFragment", "加入收藏")
+            CarOption(if (item.isFavorite) "取消最愛" else "加入最愛") {
+                viewModel.toggleFavorite(item)
             },
             CarOption("複製連結") {
-                Log.d("CarOptionsDialogFragment", "複製連結")
+                copyToClipboard()
             },
-            CarOption("刪除") {
-                Log.d("CarOptionsDialogFragment", "刪除")
+            CarOption("刪除車號") {
+                deleteItem(item)
             }
         )
 
@@ -34,5 +39,20 @@ class CarOptionsDialogFragment(val item: CarItem) : DialogFragment() {
                 }
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
+    }
+
+    private fun copyToClipboard() {
+        val clipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip = ClipData.newPlainText("url", item.url)
+        clipboard.setPrimaryClip(clip)
+    }
+
+    private fun deleteItem(item: CarItem) {
+        val dialog = AlertDialog.Builder(requireContext()).setTitle("刪除車號")
+            .setMessage("你確定要刪除 ${item.number} 嗎？")
+            .setPositiveButton(getString(R.string.dialog_ok)) { _, _ ->
+                viewModel.deleteCarItem(item)
+            }.setNegativeButton(getString(R.string.dialog_cancel)) { _, _ -> }.create()
+        dialog.show()
     }
 }
