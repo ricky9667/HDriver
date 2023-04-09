@@ -41,7 +41,7 @@ class CarListFragment : Fragment() {
                 override fun onClick(item: CarItem) = viewCarListItem(item)
             })
             setOnLongClickListener(object : CarListAdapter.ItemClickListener {
-                override fun onClick(item: CarItem) = copyUrlToClipboard(item.url)
+                override fun onClick(item: CarItem) = showCarOptionsDialog(item)
             })
             setOnDeleteClickListener(object : CarListAdapter.ItemClickListener {
                 override fun onClick(item: CarItem) = deleteItem(item)
@@ -66,6 +66,11 @@ class CarListFragment : Fragment() {
         val intent = Intent(activity, WebViewActivity::class.java)
         intent.putExtra("url", url)
         startActivity(intent)
+    }
+
+    private fun showCarOptionsDialog(item: CarItem) {
+        val dialog = CarOptionsDialogFragment(item)
+        dialog.show(parentFragmentManager, "CarOptionsDialogFragment")
     }
 
     private fun copyUrlToClipboard(url: String) {
