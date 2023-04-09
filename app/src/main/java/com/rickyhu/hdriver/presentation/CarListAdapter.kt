@@ -12,7 +12,6 @@ class CarListAdapter : ListAdapter<CarItem, CarListAdapter.ViewHolder>(DiffCallb
 
     private var listener: ItemClickListener? = null
     private var longClickListener: ItemClickListener? = null
-    private var deleteListener: ItemClickListener? = null
 
     fun setOnItemClickListener(listener: ItemClickListener) {
         this.listener = listener
@@ -22,15 +21,10 @@ class CarListAdapter : ListAdapter<CarItem, CarListAdapter.ViewHolder>(DiffCallb
         this.longClickListener = listener
     }
 
-    fun setOnDeleteClickListener(listener: ItemClickListener) {
-        this.deleteListener = listener
-    }
-
     inner class ViewHolder(binding: FragmentCarItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         val carNumberView = binding.carNumber
         val carUrlView = binding.carUrl
-        private val deleteButton = binding.buttonDeleteItem
 
         init {
             itemView.setOnClickListener {
@@ -49,17 +43,7 @@ class CarListAdapter : ListAdapter<CarItem, CarListAdapter.ViewHolder>(DiffCallb
                 }
                 true
             }
-
-            deleteButton.setOnClickListener {
-                val position = bindingAdapterPosition
-                if (position != RecyclerView.NO_POSITION) {
-                    val item = getItem(position)
-                    deleteListener?.onClick(item)
-                }
-            }
         }
-
-        override fun toString(): String = carUrlView.text.toString()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

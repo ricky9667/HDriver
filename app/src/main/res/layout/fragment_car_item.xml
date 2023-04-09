@@ -24,20 +24,7 @@
             android:id="@+id/car_url"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="https://nhentai.org/g/123456"
+            android:text="https://nhentai.net/g/123456"
             android:textAppearance="?attr/textAppearanceListItemSecondary" />
     </LinearLayout>
-
-    <ImageButton
-        android:id="@+id/button_delete_item"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@null"
-        android:contentDescription="@string/delete_button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_delete" />
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
