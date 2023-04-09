@@ -10,7 +10,6 @@ import com.rickyhu.hdriver.data.model.CarItem
 import kotlinx.coroutines.launch
 
 class CarListViewModel(db: AppDatabase) : ViewModel() {
-
     private val carItemDao = db.carItemDao()
     var onRecentListChanged: (List<CarItem>) -> Unit = {}
 
@@ -42,6 +41,12 @@ class CarListViewModel(db: AppDatabase) : ViewModel() {
     fun updateCarItemViewTime(item: CarItem) {
         viewModelScope.launch {
             carItemDao.update(item.copy(lastViewedTime = System.currentTimeMillis()))
+        }
+    }
+
+    fun setCarItemFavorite(item: CarItem, isFavorite: Boolean) {
+        viewModelScope.launch {
+            carItemDao.update(item.copy(isFavorite = isFavorite))
         }
     }
 

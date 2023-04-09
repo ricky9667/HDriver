@@ -9,5 +9,6 @@ data class CarItem(
     @PrimaryKey val id: String = UUID.randomUUID().toString(),
     val url: String,
     val number: String,
-    val lastViewedTime: Long = System.currentTimeMillis()
+    val lastViewedTime: Long = System.currentTimeMillis(),
+    val isFavorite: Boolean = false
 )
